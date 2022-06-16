@@ -1,0 +1,18 @@
+notifications:
+  - id: unique-id-slack
+    type: slack
+    data:
+      url: SLACK_WEBHOOK_URL_HERE
+probes:
+  - id: "1"
+    name: Hyperjump
+    description: Landing page
+    interval: 3
+    incidentThreshold: 3
+    recoveryThreshold: 3
+    requests:
+      - method: GET
+        url: https://hyperjump.tech
+    alerts:
+      - query: response.status != 200
+        message: Status not 2xx

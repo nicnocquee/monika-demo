@@ -1,0 +1,24 @@
+notifications:
+  - id: unique-id-slack
+    type: slack
+    data:
+      url: SLACK_WEBHOOK_URL_HERE
+probes:
+  - id: "1"
+    name: Chaining
+    description: Check chaining
+    interval: 3
+    incidentThreshold: 3
+    recoveryThreshold: 3
+    requests:
+      - method: GET
+        url: http://localhost:3000/api/demo/chain/login
+         alerts:
+          - query: response.status != 200
+            message: Status not 2xx
+      - method: GET
+        url: http://localhost:3000/api/demo/chain/user/{{ response.[0].data.uid }}
+        alerts:
+        - query: response.time > 3000
+          message: Status not 2xx
+   

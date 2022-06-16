@@ -1,0 +1,18 @@
+notifications:
+  - id: unique-id-slack
+    type: slack
+    data:
+      url: SLACK_WEBHOOK_URL_HERE
+probes:
+  - id: "1"
+    name: Check body
+    description: Check body error
+    interval: 3
+    incidentThreshold: 3
+    recoveryThreshold: 3
+    requests:
+      - method: GET
+        url: http://localhost:3000/api/demo/body-error
+        alerts:
+          - query: response.body.status == "error"
+            message: Body status is error

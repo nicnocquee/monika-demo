@@ -1,0 +1,18 @@
+notifications:
+  - id: unique-id-slack
+    type: slack
+    data:
+      url: SLACK_WEBHOOK_URL_HERE
+probes:
+  - id: "1"
+    name: Localhost
+    description: Check status
+    interval: 3
+    incidentThreshold: 3
+    recoveryThreshold: 3
+    requests:
+      - method: GET
+        url: http://localhost:3000/api/demo/delay
+    alerts:
+      - query: response.time > 2000
+        message: Response time more than 2 seconds
